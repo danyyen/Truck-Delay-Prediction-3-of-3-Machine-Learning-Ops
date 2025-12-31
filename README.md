@@ -13,7 +13,47 @@ In Part 2, I focused on building a machine learning pipeline by retrieving data 
 
 Building upon the groundwork laid in Parts 1 and 2, this part implements model monitoring to detect data and model drift, integrates CI/CD practices for automated model deployment, and leverages Amazon SageMaker Pipelines for streamlined orchestration of the machine learning workflow. The aim is to ensure the reliability, scalability, and efficiency of the deployed model in real-world logistics scenarios.
 
-Approach
+# Truck Delay Classification – End-to-End MLOps Platform
+
+An end-to-end **production-ready MLOps system** for predicting truck delivery delays using historical and streaming data.  
+This project demonstrates **modern ML engineering and MLOps practices** including feature stores, automated pipelines, drift detection, conditional retraining, model versioning, and infrastructure-as-code.
+
+---
+
+## Problem Statement
+
+Late truck deliveries increase operational costs, disrupt supply chains, and reduce customer satisfaction.  
+This project builds a **classification model** that predicts whether a truck delivery will be delayed and operationalizes it using **best-in-class MLOps practices** to ensure reliability in production.
+
+---
+
+## Solution Overview
+
+The system is designed as a **fully automated ML lifecycle**:
+
+
+## Key objectives:
+- Prevent training–serving skew
+- Retrain models **only when necessary**
+- Ensure reproducibility and observability
+- Clean separation of ML logic and infrastructure
+
+---
+
+## High-Level Architecture
+
+**Core Components**
+- **Feature Store:** Hopsworks (offline & online features)
+- **ML Pipelines:** Amazon SageMaker Pipelines
+- **Model Registry:** Weights & Biases (W&B)
+- **Monitoring:** Evidently (data & model drift)
+- **Serving:** Streamlit inference application
+- **Automation:** AWS Lambda, Step Functions, EventBridge
+- **Infrastructure:** Docker & AWS CDK
+
+---
+
+### Approach
 * Setting up Streaming Data Generation:
    * Define functions or scripts to generate streaming data mimicking real-world scenarios
    * Ensure data is representative and diverse to capture various conditions and events
@@ -43,26 +83,251 @@ Approach
 * Conclusion:
    * Summarize key findings, insights, and outcomes from the monitoring approach
 
-Folder Structure
+## Folder Structure
+```
+C:.
+│   README.md
+│
+├───Lambda_function_streaming_data
+│       lambda_streaming_data_gen.py
+│
+├───Python3.10_docker
+│       Dockerfile
+│
+├───Results snapshot
+├───sagemaker_pipeline_notifications_cdk
+│   │   .gitignore
+│   │   app.py
+│   │   cdk.json
+│   │   Dockerfile
+│   │   example-workflow.json
+│   │   lambda_function.py
+│   │   requirements.txt
+│   │   source.bat
+│   │
+│   └───resources
+│           sample-event.json
+│           statemachine.png
+│
+├───StreamingData_Sagemaker_Pipeline
+│       calculate_data_drift.py
+│       calculate_model_drift.py
+│       feature_engg_finalmerge_hopsworks.py
+│       fetch_streaming_dump_to_hopsworks.py
+│       is_first_day_of_week.py
+│       model_drift_not_detected.py
+│       model_retraining.py
+│       not_first_day_of_week.py
+│       pipeline-structure.png
+│       pipeline.py
+│       previous_data_updation.py
+│       sagemaker-pipelines-project.ipynb
+│       test.py
+│
+├───Streaming_data
+│       streaming_city_weather.csv
+│       streaming_route_weather.csv
+│       streaming_schedule.csv
+│       streaming_traffic.csv
+│
+└───Training_Codes
+    │   app.py
+    │   config.yaml
+    │   engine.py
+    │   requirements.txt
+    │   sample-monitoring_pipeline.ipynb
+    │
+    ├───data
+    │       city_weather_sample.csv
+    │       data_description.pdf
+    │       drivers_table_sample.csv
+    │       routes_table_sample.csv
+    │       routes_weather_sample.csv
+    │       traffic_table_sample.csv
+    │       trucks_table_sample.csv
+    │       truck_schedule_table_sample.csv
+    │
+    ├───logs
+    │       truck_eta_error_logs.log
+    │       truck_eta_info_logs.log
+    │
+    ├───ml_pipeline
+    │   │   data_prep.py
+    │   │   evaluate.py
+    │   │   modelling.py
+    │   │   process.py
+    │   │   utils.py
+    │   │
+    │   └───__pycache__
+    │           utils.cpython-39.pyc
+    │
+    ├───models
+    │       log-truck-model.pkl
+    │       randomf-truck-model.pkl
+    │       xgb-truck-model.pkl
+    │
+    ├───notebooks_1 and 2
+    │       Truck-Delay-Classification_Part_2.ipynb
+    │       Truck_Delay_Classification_part_1.ipynb
+    │
+    └───output
+            truck_data_encoder.pkl
+            truck_data_scaler.pkl
+
 ```
 
-
-```
-
-Here is a brief information on the folders:
+### Here is a brief information on the folders:
 Lambda Function for Streaming Data: Contains lambda functions and required layers for streaming data, including lambda_streaming_data_gen.py and zipped Python layers (pymysql_layer.zip and sqlalchemy_psycopg2_layer.zip).
 
 
-Docker Setup: Provides a Dockerfile for setting up a Python 3.10 environment, located in the Python3.10_docker directory.
+##### Docker Setup:
+Provides a Dockerfile for setting up a Python 3.10 environment, located in the Python3.10_docker directory.
 
 
-SageMaker Pipeline Notifications CDK: Includes scripts and configurations for SageMaker pipeline notifications using CDK, located in the sagemaker_pipeline_notifications_cdk/python directory, with key files like app.py, lambda_function.py, and cdk.json.
+##### SageMaker Pipeline Notifications CDK:
+Includes scripts and configurations for SageMaker pipeline notifications using CDK, located in the sagemaker_pipeline_notifications_cdk/python directory, with key files like app.py, lambda_function.py, and cdk.json.
 
 
-Streaming Data SageMaker Pipeline: Contains scripts, Jupyter notebooks, and other resources for the streaming data SageMaker pipeline, found in the StreamingData_Sagemaker_Pipeline directory, with files like pipeline.py, calculate_data_drift.py, and sagemaker-pipelines-project.ipynb.
+##### Streaming Data SageMaker Pipeline:
+Contains scripts, Jupyter notebooks, and other resources for the streaming data SageMaker pipeline, found in the StreamingData_Sagemaker_Pipeline directory, with files like pipeline.py, calculate_data_drift.py, and sagemaker-pipelines-project.ipynb.
 
 
-Training Codes: Includes all the necessary scripts, data, and configurations for training models, located in the Training_Codes directory. Key components include training data (Training_data), database backups (Database_backup), machine learning pipeline scripts (ml_pipeline), trained models (models), and notebooks for analysis (notebooks).
+##### Training Codes:
+Includes all the necessary scripts, data, and configurations for training models, located in the Training_Codes directory. Key components include training data (Training_data), database backups (Database_backup), machine learning pipeline scripts (ml_pipeline), trained models (models), and notebooks for analysis (notebooks).
+
+
+### Key MLOps Concepts Demonstrated
+* Feature Store
+
+* Centralized, versioned features
+
+* Same features used for training and inference
+
+* Prevents training–serving skew
+
+### Automated ML Pipelines
+
+* End-to-end orchestration with SageMaker Pipelines
+
+* Each step runs in an isolated container
+
+* Fully reproducible executions
+
+### Drift Detection
+
+* Data drift and model drift monitored using Evidently
+
+* Statistical comparison between reference and current data
+
+### Conditional Retraining
+
+* Models retrain only when drift thresholds are exceeded
+
+* Avoids unnecessary compute costs
+
+* Improves model stability
+
+### Model Registry & Versioning
+
+* Models logged and versioned in Weights & Biases
+
+* Best model selected using validation metrics
+
+* Approved models consumed by inference services
+
+### Inference & Serving
+
+* Streamlit application for real-time predictions
+
+* Loads latest approved model artifacts
+
+* Uses saved encoder and scaler for consistency
+
+### Observability & Alerting
+
+* Structured logging (info & error logs)
+
+* SNS email notifications on pipeline success/failure
+
+* Step Functions + EventBridge automation
+
+### Infrastructure as Code
+
+* AWS CDK used to define pipelines, alerts, and workflows
+
+* Fully reproducible cloud infrastructure
+
+### Technologies Used
+
+* Languages: Python
+
+* ML: Scikit-learn, XGBoost
+
+* MLOps: SageMaker Pipelines, Evidently, Weights & Biases
+
+* Feature Store: Hopsworks
+
+* Serving: Streamlit
+
+* Cloud: AWS (S3, Lambda, SNS, Step Functions)
+
+* Infrastructure: Docker, AWS CDK
+
+### Pipeline Execution Flow
+
+* Ingest new and historical data
+
+* Update feature store
+
+* Run data & model drift checks
+
+* Retrain models only if drift thresholds are exceeded
+
+* Register best-performing model
+
+* Serve predictions using latest approved artifacts
+
+## Models Trained
+
+* Logistic Regression
+
+* Random Forest
+
+* XGBoost (primary production candidate)
+
+### Evaluation metrics:
+
+* F1-score
+
+* Recall
+
+* Validation consistency
+
+## Future Improvements
+
+* Add REST API using FastAPI
+
+* Canary deployments for model rollout
+
+* Feature importance monitoring
+
+* Automated rollback on performance degradation
+
+## Author
+
+Nd Fyneface
+Data Analytics & MLOps Practitioner
+
+## Why This Project Matters
+
+* This repository demonstrates real-world MLOps, not just model training:
+
+* End-to-end automation
+
+* Production reliability
+
+* Scalable architecture
+
 
 
 # Local Execution Instructions
