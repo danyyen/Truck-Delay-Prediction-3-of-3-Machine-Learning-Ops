@@ -7,9 +7,9 @@ Enhance customer satisfaction by providing more reliable delivery schedules
 Optimize route planning to reduce delays caused by traffic or adverse weather conditions
 Reduce costs associated with delayed shipments, such as penalties or compensation to customers
 
-In Part 1, I laid the groundwork by utilizing PostgreSQL and MySQL in AWS RDS for data storage, setting up an AWS Sagemaker Notebook, performing data retrieval, conducting exploratory data analysis, and creating feature groups with Hopsworks. 
+**In Part 1** https://github.com/danyyen/Truck-Delay-Prediction-1-of-3.git , I laid the groundwork by utilizing PostgreSQL and MySQL in AWS RDS for data storage, setting up an AWS Sagemaker Notebook, performing data retrieval, conducting exploratory data analysis, and creating feature groups with Hopsworks. 
 
-In Part 2, I focused on building a machine learning pipeline by retrieving data from the feature store, performing train-validation-test split, one-hot encoding, scaling numerical features, experimenting with logistic regression, random forest, and XGBoost models, and deploying a Streamlit application on AWS.
+**In Part 2** https://github.com/danyyen/Truck-Delay-Prediction-2-of-3.git , I focused on building a machine learning pipeline by retrieving data from the feature store, performing train-validation-test split, one-hot encoding, scaling numerical features, experimenting with logistic regression, random forest, and XGBoost models, and deploying a Streamlit application on AWS.
 
 Building upon the groundwork laid in Parts 1 and 2, this part implements model monitoring to detect data and model drift, integrates CI/CD practices for automated model deployment, and leverages Amazon SageMaker Pipelines for streamlined orchestration of the machine learning workflow. The aim is to ensure the reliability, scalability, and efficiency of the deployed model in real-world logistics scenarios.
 
